@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Root element -->
+  <xs:element name="featureModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="feature" type="FeatureType" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="constraints" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="constraint" type="ConstraintType" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- FeatureType definition -->
+  <xs:complexType name="FeatureType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="feature" type="FeatureType"/>
+        <xs:element name="group" type="GroupType"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="mandatory" type="xs:boolean" use="optional" default="false"/>
+  </xs:complexType>
+
+  <!-- GroupType definition -->
+  <xs:complexType name="GroupType">
+    <xs:sequence>
+      <xs:element name="feature" type="FeatureType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="or"/>
+          <xs:enumeration value="xor"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- ConstraintType definition -->
+  <xs:complexType name="ConstraintType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="englishStatement" type="xs:string"/>
+        <xs:element name="booleanExpression" type="xs:string"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
