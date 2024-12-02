@@ -132,8 +132,20 @@ def compute_mwps(feature_model):
 
     print("\n===== all possible working products =====")
     print(f"Total Number of MWPs: {len(mwps)}")
+
+    min_length = min(len(mwp) for mwp in mwps)  # Identify the minimum length
+
+    # Print all MWPs and their lengths
     for idx, mwp in enumerate(mwps, 1):
         print(f"\nMWP {idx}:")
-        print(", ".join(mwp) + ".")
+        print(", ".join(mwp) + f".\nLENGTH={len(mwp)}")
+
+    # Print MWPs with the minimum length
+    print("\n===== Minimum Length MWPs =====")
+    print(f"Minimum Length: {min_length}")
+    for idx, mwp in enumerate(mwps, 1):
+        if len(mwp) == min_length:
+            print(f"\nMWP {idx}:")
+            print(", ".join(mwp) + f".\nLENGTH={len(mwp)}")
 
     return mwps
